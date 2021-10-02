@@ -1,10 +1,18 @@
 package com.example.C35.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Odontologo {
 
     @Id
@@ -13,15 +21,13 @@ public class Odontologo {
     private Long id;
     private String nombre;
     private String apellido;
+    @Column(unique=true)
     private Integer matricula;
 
-    public Odontologo() {
-    }
+    @OneToMany(orphanRemoval = true,fetch=FetchType.LAZY,mappedBy="odontologo")
+    private List<Turno> turnos;
 
-    public Odontologo( String nombre, String apellido, Integer matricula) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.matricula = matricula;
+    public Odontologo() {
     }
 
 
@@ -51,5 +57,13 @@ public class Odontologo {
 
     public void setMatricula(Integer matricula) {
         this.matricula = matricula;
+    }
+
+    public List<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(List<Turno> turnos) {
+        this.turnos = turnos;
     }
 }

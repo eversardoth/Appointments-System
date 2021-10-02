@@ -1,31 +1,19 @@
-package com.example.C35.entity;
+package com.example.C35.dto;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
-@Entity
-@Table
-public class Domicilio implements Serializable {
 
-    @Id
-    @SequenceGenerator(name="escuela_sequence", sequenceName="escuela_sequence")
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="escuela_sequence")
-    private Long id;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class DomicilioDTO implements Serializable {
+
     private String calle;
     private String numero;
     private String localidad;
     private String provincia;
 
-    public Domicilio() {
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public DomicilioDTO() {
     }
 
     public String getCalle() {

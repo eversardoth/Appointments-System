@@ -1,10 +1,18 @@
 package com.example.C35.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Turno {
 
     @Id
@@ -12,10 +20,13 @@ public class Turno {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turno_sequence")
     private Long id;
 
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name="paciente_id")
     private Paciente paciente;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name="odontologo_id")
     private Odontologo odontologo;

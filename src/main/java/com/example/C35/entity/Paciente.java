@@ -1,11 +1,20 @@
 package com.example.C35.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Paciente {
 
     @Id
@@ -17,9 +26,14 @@ public class Paciente {
     private String dni;
     private Date fechaIngreso;
 
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name="domicilio_id")
     private Domicilio domicilio;
+
+    @OneToMany(orphanRemoval = true, fetch=FetchType.LAZY, mappedBy = "paciente")
+    private List<Turno> turnos;
 
     public Paciente() {
     }
@@ -74,5 +88,13 @@ public class Paciente {
 
     public void setDomicilio(Domicilio domicilio) {
         this.domicilio = domicilio;
+    }
+
+    public List<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(List<Turno> turnos) {
+        this.turnos = turnos;
     }
 }

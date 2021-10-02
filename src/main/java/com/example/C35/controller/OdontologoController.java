@@ -1,7 +1,10 @@
 package com.example.C35.controller;
 
 
+import com.example.C35.dto.OdontologoDTO;
+import com.example.C35.dto.OdontologoUpdateDTO;
 import com.example.C35.entity.Odontologo;
+import com.example.C35.exception.ResourceNotFoundException;
 import com.example.C35.service.IOdontologoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/odontologos")
+@CrossOrigin(origins="*")
 public class OdontologoController {
 
     private IOdontologoService odontologoService;
@@ -19,8 +23,8 @@ public class OdontologoController {
     }
 
     @PostMapping("/save")
-    public Odontologo save(@RequestBody Odontologo odontologo){
-        return odontologoService.save(odontologo);
+    public Odontologo save(@RequestBody OdontologoDTO odontologoDTO){
+        return odontologoService.save(odontologoDTO);
     }
 
     @GetMapping
@@ -29,13 +33,13 @@ public class OdontologoController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id) throws ResourceNotFoundException {
         return odontologoService.delete(id);
     }
 
     @PutMapping("/update")
-    public Odontologo update(@RequestBody Odontologo odontologo){
-        return odontologoService.update(odontologo);
+    public Odontologo update(@RequestBody OdontologoUpdateDTO odontologoUpdateDTO){
+        return odontologoService.update(odontologoUpdateDTO);
     }
 
     @GetMapping("/{id}")
