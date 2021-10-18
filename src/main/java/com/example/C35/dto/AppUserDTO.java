@@ -1,12 +1,11 @@
 package com.example.C35.dto;
 
-import com.example.C35.entity.AppRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.Set;
 
-
+@JsonIgnoreProperties (ignoreUnknown = true)
 public class AppUserDTO implements Serializable {
 
     private String nombre;
@@ -64,7 +63,7 @@ public class AppUserDTO implements Serializable {
         return idRoles;
     }
 
-    public void setRoles(Set<Long> idRoles) {
+    public void setIdRoles(Set<Long> idRoles) {
         this.idRoles = idRoles;
     }
 }

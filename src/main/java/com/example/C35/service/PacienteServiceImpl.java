@@ -3,7 +3,9 @@ package com.example.C35.service;
 import com.example.C35.dto.PacienteDTO;
 import com.example.C35.dto.PacienteUpdateDTO;
 import com.example.C35.entity.Domicilio;
+import com.example.C35.entity.Odontologo;
 import com.example.C35.entity.Paciente;
+import com.example.C35.entity.Turno;
 import com.example.C35.exception.ResourceNotFoundException;
 import com.example.C35.repository.IPacienteRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,6 +56,11 @@ public class PacienteServiceImpl implements IPacienteService {
         paciente.setDomicilio(domicilio);
 
         if(findById(id).isPresent() & pacienteUpdateDTO.getDomicilio() != null){
+            Paciente pacienteTemp = findById(id).orElse(null);
+
+            List<Turno> turnos = pacienteTemp.getTurnos();
+
+            paciente.setTurnos(turnos);
             return pacienteRepository.save(paciente);
         }
 

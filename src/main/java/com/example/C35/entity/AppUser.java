@@ -1,6 +1,4 @@
 package com.example.C35.entity;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +8,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"idRoles"})
 public class AppUser implements UserDetails {
     @Id
     @SequenceGenerator(name="user_sequence",sequenceName = "user_sequence")

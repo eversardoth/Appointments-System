@@ -4,6 +4,7 @@ import com.example.C35.dto.OdontologoDTO;
 import com.example.C35.dto.OdontologoUpdateDTO;
 import com.example.C35.entity.Odontologo;
 import com.example.C35.entity.Paciente;
+import com.example.C35.entity.Turno;
 import com.example.C35.exception.ResourceNotFoundException;
 import com.example.C35.repository.IOdontologoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,10 +48,18 @@ public class OdontologoServiceImpl implements IOdontologoService {
 
         Long id = odontologoUpdateDTO.getId();
 
+
         ObjectMapper mapper = new ObjectMapper();
         Odontologo odontologo = mapper.convertValue(odontologoUpdateDTO, Odontologo.class);
 
         if(findById(id).isPresent()){
+
+            Odontologo odontologoTemp = findById(id).orElse(null);
+
+            List<Turno> turnos = odontologoTemp.getTurnos();
+
+            odontologo.setTurnos(turnos);
+
             return odontologoRepository.save(odontologo);
         }
 
